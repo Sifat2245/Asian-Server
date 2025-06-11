@@ -57,6 +57,15 @@ const run = async() =>{
             res.send(result)
         })
 
+        app.get('/top-purchase', async(req, res) =>{
+            const result = await foodsCollection
+                    .find()
+                    .sort({purchaseCount: -1})
+                    .limit(8)
+                    .toArray()
+            res.send(result)        
+        })
+
     }
     finally{
 
