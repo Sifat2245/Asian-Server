@@ -25,10 +25,29 @@ const client = new MongoClient(uri, {
 const run = async() =>{
     try{
         const userCollection = client.db('Asian_Restaurant').collection('users')
+        const foodsCollection = client.db('Asian_Restaurant').collection('foods')
 
         app.post('/users', async(req,res) =>{
             const newUser = req.body
             const result = await userCollection.insertOne(newUser)
+            res.send(result)
+        })
+
+        app.get('/users', async(req, res) =>{
+            const users = req.body
+            const  result = await userCollection.find(users).toArray()
+            res.send(result)
+        })
+
+        app.post('/foods', async(req, res) =>{
+            const foods = req.body
+            const result = await foodsCollection.insertOne(foods)
+            res.send(result)
+        })
+
+        app.get('/foods', async(req, res) =>{
+            const foods = req.body
+            const result = await foodsCollection.find(foods).toArray()
             res.send(result)
         })
 
