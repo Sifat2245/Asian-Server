@@ -53,8 +53,8 @@ const run = async () => {
                 {_id: new ObjectId(foodId)},
                 {
                     $inc:{
-                        purchaseCount:(orderedQuantity),
-                        quantity: -(orderedQuantity)
+                        purchaseCount: parseInt(orderedQuantity),
+                        quantity: -parseInt(orderedQuantity)
                     }
                 }
             );
