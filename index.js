@@ -46,6 +46,17 @@ const run = async () => {
             res.send(result)
         })
 
+        app.get('/foods', async (req, res) => {
+            const result = await foodsCollection.find().toArray()
+            res.send(result)
+        })
+        app.get('/foods/:id', async (req, res) => {
+            const id = req.params.id
+            const query = { _id: new ObjectId(id) }
+            const result = await foodsCollection.findOne(query)
+            res.send(result)
+        })
+
         app.patch('/foods/:id', async(req,res) =>{
             const foodId = req.params.id
             const {orderedQuantity} = req.body
@@ -61,17 +72,7 @@ const run = async () => {
             res.send(result)
         })
 
-        app.get('/foods', async (req, res) => {
-            const foods = req.body
-            const result = await foodsCollection.find(foods).toArray()
-            res.send(result)
-        })
-        app.get('/foods/:id', async (req, res) => {
-            const id = req.params.id
-            const query = { _id: new ObjectId(id) }
-            const result = await foodsCollection.findOne(query)
-            res.send(result)
-        })
+       
 
         app.get('/top-purchase', async (req, res) => {
             const result = await foodsCollection
