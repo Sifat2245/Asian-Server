@@ -24,6 +24,8 @@ const client = new MongoClient(uri, {
 
 const run = async () => {
     try {
+        // await client.connect();
+
         const userCollection = client.db('Asian_Restaurant').collection('users')
         const foodsCollection = client.db('Asian_Restaurant').collection('foods')
         const orderCollection = client.db('Asian_Restaurant').collection('orders')
@@ -35,7 +37,6 @@ const run = async () => {
         })
 
         app.get('/users', async (req, res) => {
-            const users = req.body
             const result = await userCollection.find(users).toArray()
             res.send(result)
         })
@@ -54,6 +55,13 @@ const run = async () => {
             const id = req.params.id
             const query = { _id: new ObjectId(id) }
             const result = await foodsCollection.findOne(query)
+            res.send(result)
+        })
+
+        app.get('/food/:email', async(req, res) =>{
+            const email = req.params.email
+            const query = {addedBy: email}
+            const result = await foodsCollection.find(query).toArray()
             res.send(result)
         })
 
@@ -90,7 +98,6 @@ const run = async () => {
         })
 
         app.get('/orders', async (req, res) => {
-            const orders = req.body
             const result = await orderCollection.find(orders).toArray()
             res.send(result)
         })
