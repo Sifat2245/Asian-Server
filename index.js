@@ -58,20 +58,20 @@ const run = async () => {
             res.send(result)
         })
 
-        app.get('/food/:email', async(req, res) =>{
+        app.get('/food/:email', async (req, res) => {
             const email = req.params.email
-            const query = {addedBy: email}
+            const query = { addedBy: email }
             const result = await foodsCollection.find(query).toArray()
             res.send(result)
         })
 
-        app.patch('/foods/:id', async(req,res) =>{
+        app.patch('/foods/:id', async (req, res) => {
             const foodId = req.params.id
-            const {orderedQuantity} = req.body
+            const { orderedQuantity } = req.body
             const result = await foodsCollection.updateOne(
-                {_id: new ObjectId(foodId)},
+                { _id: new ObjectId(foodId) },
                 {
-                    $inc:{
+                    $inc: {
                         purchaseCount: parseInt(orderedQuantity),
                         quantity: -parseInt(orderedQuantity)
                     }
@@ -80,17 +80,17 @@ const run = async () => {
             res.send(result)
         })
 
-       app.put('/foods/:id', async(req, res) =>{
-        const id = req.params.id
-        const filter = {_id: new ObjectId(id)}
-        const options = {upsert: true}
-        const updatedFood = req.body
-        const updatedDoc = {
-            $set: updatedFood
-        }
-        const result = await foodsCollection.updateOne(filter, updatedDoc, options)
-        res.send(result)
-       })
+        app.put('/foods/:id', async (req, res) => {
+            const id = req.params.id
+            const filter = { _id: new ObjectId(id) }
+            const options = { upsert: true }
+            const updatedFood = req.body
+            const updatedDoc = {
+                $set: updatedFood
+            }
+            const result = await foodsCollection.updateOne(filter, updatedDoc, options)
+            res.send(result)
+        })
 
 
         app.get('/top-purchase', async (req, res) => {
@@ -104,12 +104,19 @@ const run = async () => {
 
         app.post('/orders', async (req, res) => {
             const orders = req.body
-            const result = await orderCollection.insertOne(orders)           
+            const result = await orderCollection.insertOne(orders)
             res.send(result)
         })
 
         app.get('/orders', async (req, res) => {
-            const result = await orderCollection.find(orders).toArray()
+            const result = await orderCollection.find().toArray()
+            res.send(result)
+        })
+
+        app.get('/order/:email', async (req, res) => {
+            const email = req.params.email
+            const query = { userEmail: email }
+            const result = await orderCollection.find(query).toArray()
             res.send(result)
         })
 
