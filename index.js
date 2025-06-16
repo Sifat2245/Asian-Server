@@ -49,6 +49,7 @@ const verifyFirebaseToken = async (req, res, next) => {
     try {
         const decoded = await admin.auth().verifyIdToken(token)
         console.log('decoded token', decoded);
+        req.decoded = decoded
 
         next()
     }
@@ -170,7 +171,7 @@ const run = async () => {
             res.send(result)
         })
 
-        app.get('/orders', async (req, res) => {
+        app.get('/orders', verifyFirebaseToken, async (req, res) => {
             const result = await orderCollection.find().toArray()
             res.send(result)
         })
