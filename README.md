@@ -52,10 +52,10 @@ emailVerify: Checks if email param matches decoded token email
 
 ## Setup & Run
 
-git clone https://github.com/your-username/your-repo.git
+git clone https://github.com/Sifat2245/Asian-Server.git
 cd your-repo
 npm install
-### add your .env file
+#### add your .env file
 npm start
 
 
